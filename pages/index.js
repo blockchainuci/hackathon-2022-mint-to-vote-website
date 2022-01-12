@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { useMetamask } from "use-metamask";
+import {FaDna, FaRobot, FaInfinity} from "react-icons/fa";
 import Web3 from "web3";
 import styles from "../styles/Home.module.css";
 
@@ -74,7 +75,7 @@ export default function Home() {
           </p>
         )}
         {metaState.isConnected ? (
-        <div className={styles.grid}>
+        <div className={`${styles.grid} ${styles.gridCandidates}`}>
           <a href="" className={styles.card}>
             <h2>Candidate 1 &rarr;</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum congue libero, ac euismod eros tempus hendrerit.</p>
@@ -85,6 +86,35 @@ export default function Home() {
             <p>Nam condimentum, mauris sed ullamcorper vestibulum, sem massa porttitor nisi, vel dictum metus turpis a ligula.</p>
           </a>
         </div> ) : (<br/>)}
+
+        <h1 className={styles.title}>
+          The Advantages
+        </h1>
+        <div className={styles.grid}>
+          <div className={styles.advantages}>
+            <h2><FaDna size={20} color={'#02E4C0'} /> A single source of truth</h2>
+            <p>To combat duplicate accounts or bots from overriding votes, we have implemented a seamless KYC process.</p>
+          </div>
+          <div className={styles.advantages}>
+            <h2><FaRobot size={20} color={'#02E4C0'} /> KYC Proteted</h2>
+            <p>Utilizing Harmony’s Blockchain, voting can be done in a truly trustless enviroment ensuring the extinction of fradulent votes or miscounts.</p>
+          </div>
+          <div className={styles.advantages}>
+            <h2><FaInfinity size={20} color={'#02E4C0'} /> Possibilities</h2>
+            <p>With transaction feels amounting to ~$0.00001 per txn, and finality times in ~2 seconds this system is infintely scalable, fast and will cost signifigantly less than major campaigns.</p>
+          </div>
+        </div>
+
+        <h1 className={styles.title}>
+          Past Elections
+        </h1>
+        <p className={styles.description}>View the results of past elections, who the candidates were, why the ran, explore on chain data of votes, and the complete history of the election.</p>
+        <a className={styles.fancy}>
+        <span className={styles.topkey}></span>
+  <span className={styles.buttontext}>Coming Soon</span>
+  <span className={styles.bottomkey1}></span>
+  <span className={styles.bottomkey2}></span>
+        </a>
       </main>
 
       <footer className={styles.footer}>
