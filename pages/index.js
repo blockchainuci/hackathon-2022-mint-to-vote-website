@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { useMetamask } from "use-metamask";
-import {FaDna, FaRobot, FaInfinity} from "react-icons/fa";
+import { FaDna, FaRobot, FaInfinity } from "react-icons/fa";
 import Web3 from "web3";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const { connect, metaState } = useMetamask();
-  const [balance, setBalance] = useState();
+  const [balance, setBalance, onh] = useState();
   useEffect(() => {
     if (!metaState.isConnected) {
       (async () => {
@@ -28,10 +28,16 @@ export default function Home() {
     if (account.length && isConnected && web3) {
       (async () => {
         let _balance;
+        let _onh = false;
         if (web3?.eth) {
           _balance = await metaState.web3.eth.getBalance(metaState.account[0]);
         } else {
           _balance = await metaState.web3.getBalance(metaState.account[0]);
+        }
+        const harmonyShards = [1666600000, 1666600001, 1666600002, 1666600003, 1666700000, 1666700001, 1666700002, 1666700003]
+        if (harmonyShards.indexOf(parseInt(metaState.chain.id)) != -1) {
+          _onh = true;
+          console.log(_onh);
         }
         setBalance(parseFloat(_balance / 10 ** 18).toFixed(3));
       })();
@@ -52,40 +58,40 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-        Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...<br/><b>We’re here to do just that.</b></p>
+          Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...<br /><b>We’re here to do just that.</b></p>
 
-        {metaState.isConnected ? (
+        {onh ? (
           <p className={styles.description}>
             Đapp connected to the {" "}
             <code className={styles.code}>
-                {metaState.chain.id}
-              </code> chain on the wallet{""}
+              {metaState.chain.id}
+            </code> chain on the wallet{""}
             <code className={styles.code}>{metaState.account[0]}</code>
           </p>
         ) : (
           <p className={styles.description}>
-            <b>Not connected to MetaMask.</b><br/>Let&apos;s fix that!<br/>
+            <b>Not connected to MetaMask.</b><br />Let&apos;s fix that!<br />
             <ol>
               <li><p>Make sure <a href="https://metamask.io/download">MetaMask</a> is installed</p></li>
               <li><p>Add <a href="https://docs.harmony.one/home/network/wallets/browser-extensions-wallets/metamask-wallet#installing-metamask">HarmonyOne&apos;s mainnet <Image src="/harmonyone.svg" alt="GitHub Logo" width={32} height={16} /></a></p></li>
               <li><p>Click the MetaMask extension
-              <Image src="/metamask.svg" alt="GitHub Logo" width={32} height={16} />
+                <Image src="/metamask.svg" alt="GitHub Logo" width={32} height={16} />
               </p></li>
             </ol>
           </p>
         )}
         {metaState.isConnected ? (
-        <div className={`${styles.grid} ${styles.gridCandidates}`}>
-          <a href="" className={styles.card}>
-            <h2>Candidate 1 &rarr;</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum congue libero, ac euismod eros tempus hendrerit.</p>
-          </a>
+          <div className={`${styles.grid} ${styles.gridCandidates}`}>
+            <a href="" className={styles.card}>
+              <h2>Candidate 1 &rarr;</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum congue libero, ac euismod eros tempus hendrerit.</p>
+            </a>
 
-          <a href="" className={styles.card}>
-            <h2>Candidate 2 &rarr;</h2>
-            <p>Nam condimentum, mauris sed ullamcorper vestibulum, sem massa porttitor nisi, vel dictum metus turpis a ligula.</p>
-          </a>
-        </div> ) : (<br/>)}
+            <a href="" className={styles.card}>
+              <h2>Candidate 2 &rarr;</h2>
+              <p>Nam condimentum, mauris sed ullamcorper vestibulum, sem massa porttitor nisi, vel dictum metus turpis a ligula.</p>
+            </a>
+          </div>) : (<br />)}
 
         <h1 className={styles.title}>
           The Advantages
@@ -110,31 +116,31 @@ export default function Home() {
         </h1>
         <p className={styles.description}>View the results of past elections, who the candidates were, why the ran, explore on chain data of votes, and the complete history of the election.</p>
         <a className={styles.fancy}>
-        <span className={styles.topkey}></span>
-  <span className={styles.buttontext}>Coming Soon</span>
-  <span className={styles.bottomkey1}></span>
-  <span className={styles.bottomkey2}></span>
+          <span className={styles.topkey}></span>
+          <span className={styles.buttontext}>Coming Soon</span>
+          <span className={styles.bottomkey1}></span>
+          <span className={styles.bottomkey2}></span>
         </a>
       </main>
 
       <footer className={styles.footer}>
         <span>
-      <a
-          href="https://github.com/blockchainuci/hackathon-2022-mint-to-vote-website"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-            <Image src="/github.svg" alt="GitHub Logo" width={32} height={16} /></a>
-          </span>
-          Powered by{" "}
-          <span className={styles.logo}>
           <a
-          href="https://harmony.one"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+            href="https://github.com/blockchainuci/hackathon-2022-mint-to-vote-website"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image src="/github.svg" alt="GitHub Logo" width={32} height={16} /></a>
+        </span>
+        Powered by{" "}
+        <span className={styles.logo}>
+          <a
+            href="https://harmony.one"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image src="/harmony.svg" alt="Harmony Logo" width={72} height={16} /></a>
-          </span>. Made by Kainoa Kanter, Anish Lathker, Ethan Nguyen, and Daniel Lee.
+        </span>. Made by Kainoa Kanter, Anish Lathker, Ethan Nguyen, and Daniel Lee.
       </footer>
     </div>
   );
