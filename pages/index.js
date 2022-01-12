@@ -8,7 +8,8 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const { connect, metaState } = useMetamask();
-  const [balance, setBalance, onh] = useState();
+  const [balance, setBalance] = useState();
+  const [onh, setOnh] = useState(false);
   useEffect(() => {
     if (!metaState.isConnected) {
       (async () => {
@@ -28,7 +29,7 @@ export default function Home() {
     if (account.length && isConnected && web3) {
       (async () => {
         let _balance;
-        let _onh = false;
+        let _onh;
         if (web3?.eth) {
           _balance = await metaState.web3.eth.getBalance(metaState.account[0]);
         } else {
@@ -37,7 +38,12 @@ export default function Home() {
         const harmonyShards = [1666600000, 1666600001, 1666600002, 1666600003, 1666700000, 1666700001, 1666700002, 1666700003]
         if (harmonyShards.indexOf(parseInt(metaState.chain.id)) != -1) {
           _onh = true;
+          setOnh(true);
           console.log(_onh);
+        }
+        else {
+          _onh = false;
+          setOnh(false)
         }
         setBalance(parseFloat(_balance / 10 ** 18).toFixed(3));
       })();
@@ -80,7 +86,7 @@ export default function Home() {
             </ol>
           </p>
         )}
-        {metaState.isConnected ? (
+        {onh ? (
           <div className={`${styles.grid} ${styles.gridCandidates}`}>
             <a href="" className={styles.card}>
               <h2>Candidate 1 &rarr;</h2>
@@ -115,6 +121,14 @@ export default function Home() {
           Past Elections
         </h1>
         <p className={styles.description}>View the results of past elections, who the candidates were, why the ran, explore on chain data of votes, and the complete history of the election.</p>
+        <div className={styles.examplesGrid}>
+          <div className={styles.pastVoteImageHolder}>
+          <Image className={styles.pastVoteImage} alt="Example past vote" src="/ex1.png" width={400} height={400}/>
+          </div>
+          <div className={styles.pastVoteImageHolder}>
+          <Image className={styles.pastVoteImage} alt="Example past vote" src="/ex2.png" width={400} height={400}/>
+          </div>
+        </div>
         <a className={styles.fancy}>
           <span className={styles.topkey}></span>
           <span className={styles.buttontext}>Coming Soon</span>
