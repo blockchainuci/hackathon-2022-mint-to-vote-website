@@ -12,20 +12,24 @@ export default function Home() {
   const [balance, setBalance] = useState();
   const [onh, setOnh] = useState(false);
   const [onnet, setOnnet] = useState("Harmony Testnet");
+  const [votes, setVotes] = useState();
+
   useEffect(() => {
     if (!metaState.isConnected) {
       async function loadContract() {
-        return await new window.web3.eth.Contract([ProposalContract, "one1s7qmn0safezuajxyxqnvxqjxp9yz2wekhdnt8n"])
+        return await new window.web3.eth.Contract([ProposalContract, "one1u73y7mthhz5ajwdpuywlhxs9456862aahrkjwz"])
       }
       async function getCurrentAccount() {
         const accounts = await window.web3.eth.getAccounts();
         return accounts[0];r
       }
-      async function createNewProposal() {
-        //AAA
+      async function getVotes() {
+        let _votes;
+        const fetchedvotes = await window.contract.methods.coolNumber().call();
+        _votes = fetchedvotes;
+        setVotes(fetchedvotes)
       }
       async function load() {
-        await loadWeb3();
         window.contract = await loadContract();
         updateStatus('Ready!');
       }
