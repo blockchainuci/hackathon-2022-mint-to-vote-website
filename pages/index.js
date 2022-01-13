@@ -117,8 +117,22 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>Mint to Vote</title>
+        <meta name="title" content="Mint to Vote"></meta>
         <meta name="description" content="Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...we’re here to do just that." />
         <link rel="icon" href="/logo.png" />
+        <meta name="theme-color" content="#4452FE" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=5.0" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Mint to Vote" />
+        <meta property="og:image" content="https://cdn.discordapp.com/attachments/923361968969121833/931078558921674822/Mint_To_Vote_1.png" />
+        <meta property="og:description" content="Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...we’re here to do just that." />
+        <meta property="og:url" content="https://minttovote.vercel.app/" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="Mint to Vote" />
+        <meta property="twitter:description" content="Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...we’re here to do just that." />
+        <meta property="twitter:image" content="https://cdn.discordapp.com/attachments/923361968969121833/931078558921674822/Mint_To_Vote_1.png" />
       </Head>
 
       <main className={styles.main}>
