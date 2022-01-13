@@ -47,6 +47,10 @@ export default function Home() {
             _onnet = "Harmony Mainnet";
             setOnnet("Harmony Mainnet");
           }
+          else {
+            _onnet = "Harmony Testnet";
+            setOnnet("Harmony Testnet");
+          }
         }
         else {
           _onh = false;
