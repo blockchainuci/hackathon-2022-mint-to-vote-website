@@ -26,8 +26,6 @@ export default function Home() {
         } catch (error) {
           console.log(error);
         }
-
-
       })();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,37 +73,40 @@ export default function Home() {
           const MiniToken = contract(ProposalContract["abi"]);
           const miniToken = MiniToken.at(address);
           console.log(miniToken)
-          listenForClicksOnOne(miniToken);
-          listenForClicksOnTwo(miniToken);
+          if (onh) {
+            listenForClicksOnOne(miniToken);
+            listenForClicksOnTwo(miniToken);
+          }
+          return
         }
         function listenForClicksOnOne(miniToken) {
           var button = document.getElementById("candidate-one")
           button.addEventListener('click', function () {
-            console.log("here")
-            miniToken.vote(0, { from: metaState.account[0] }).then(function (txHash) {
+            return miniToken.vote(0, { from: metaState.account[0] }).then(function (txHash) {
               console.log('Transaction sent')
               console.dir(txHash)
               waitForTxToBeMined(txHash)
             }).catch(console.error)
-          })
+          }, false)
         }
         function listenForClicksOnTwo(miniToken) {
           var button = document.getElementById("candidate-two")
           button.addEventListener('click', function () {
-            miniToken.vote(1, { from: address }).then(function (txHash) {
+            return miniToken.vote(1, { from: address }).then(function (txHash) {
               console.log('Transaction sent')
               console.dir(txHash)
               waitForTxToBeMined(txHash)
             }).catch(console.error)
-          })
+          }, false)
         }
         startApp(web3);
         async function waitForTxToBeMined(txHash) {
           let txReceipt;
           while (!txReceipt) {
             try { txReceipt = await Eth.getTransactionReceipt(txHash) }
-            catch (err) { return indicateFailure(err) } }
-            indicateSuccess()
+            catch (err) { return indicateFailure(err) }
+          }
+          indicateSuccess()
         }
       })();
     }
@@ -126,8 +127,8 @@ export default function Home() {
         </h1>
         <p className={styles.description}>
           Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...<br /><b>We&apos;re here to do just that.</b></p>
-        <br/>
-        <Image src="/logo.png" alt="logo" width="200" height="200"/>
+        <br />
+        <Image src="/logo.png" alt="logo" width="200" height="200" />
 
         {onh ? (
           <p className={styles.description}>
@@ -153,15 +154,28 @@ export default function Home() {
         )}
         {onh ? (
           <div className={`${styles.grid} ${styles.gridCandidates}`}>
-            <button id="candidate-one" className={styles.card}>
+
+            <div className={styles.card}>
               <h2>Candidate 1 &rarr;</h2>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum congue libero, ac euismod eros tempus hendrerit.</p>
-            </button>
+              <a className={styles.fancy} id="candidate-one">
+                <span className={styles.topkey}></span>
+                <span className={styles.buttontext}>Vote</span>
+                <span className={styles.bottomkey1}></span>
+                <span className={styles.bottomkey2}></span>
+              </a>
+            </div>
 
-            <button id="candidate-two" className={styles.card}>
+            <div id="candidate-two" className={styles.card}>
               <h2>Candidate 2 &rarr;</h2>
               <p>Nam condimentum, mauris sed ullamcorper vestibulum, sem massa porttitor nisi, vel dictum metus turpis a ligula.</p>
-            </button>
+              <a className={styles.fancy} id="candidate-two">
+                <span className={styles.topkey}></span>
+                <span className={styles.buttontext}>Vote</span>
+                <span className={styles.bottomkey1}></span>
+                <span className={styles.bottomkey2}></span>
+              </a>
+            </div>
           </div>) : (<br />)}
 
         <h1 className={styles.title}>
