@@ -110,7 +110,7 @@ export default function Home() {
         }
       })();
     }
-  }, [metaState]);
+  }, [metaState, onh]);
 
 
   return (

@@ -8,7 +8,7 @@ export default function Instructions() {
         <div className={styles.container}>
             <Head>
                 <title>Dance!</title>
-                <meta name="description" content="Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...we’re here to do just that." />
+                <meta name="description" content="Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...we&apos;re here to do just that." />
                 <link rel="icon" href="/logo.png" />
             </Head>
 
@@ -16,10 +16,10 @@ export default function Instructions() {
                 <h1 className={styles.title}>
                     404
                 </h1>
-                <p>While you're here, why not watch the video that basically fueled development?</p>
+                <p>While you&apos;re here, why not watch the video that basically fueled development?</p>
                 <p><a href="/">Go back home</a></p>
 
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/FT91CrPPAqc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/FT91CrPPAqc" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
             </main>
         </div>
     )
