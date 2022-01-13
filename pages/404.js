@@ -19,7 +19,7 @@ export default function Instructions() {
                 <p>While you&apos;re here, why not watch the video that basically fueled development?</p>
                 <p><a href="/">Go back home</a></p>
 
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/FT91CrPPAqc" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                <iframe width="854" height="480" src="https://www.youtube.com/embed/FT91CrPPAqc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </main>
         </div>
     )
