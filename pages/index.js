@@ -6,6 +6,9 @@ import { FaDna, FaRobot, FaInfinity } from "react-icons/fa";
 import Web3 from "web3";
 import styles from "../styles/Home.module.css";
 import ProposalContract from "../contracts/Proposal";
+import Eth from "ethjs-query"
+import EthContract from "ethjs-contract"
+
 
 export default function Home() {
   const { connect, metaState } = useMetamask();
@@ -16,31 +19,15 @@ export default function Home() {
 
   useEffect(() => {
     if (!metaState.isConnected) {
-      async function loadContract() {
-        return await new window.web3.eth.Contract([ProposalContract, "one1u73y7mthhz5ajwdpuywlhxs9456862aahrkjwz"])
-      }
-      async function getCurrentAccount() {
-        const accounts = await window.web3.eth.getAccounts();
-        return accounts[0];r
-      }
-      async function getVotes() {
-        let _votes;
-        const fetchedvotes = await window.contract.methods.coolNumber().call();
-        _votes = fetchedvotes;
-        setVotes(fetchedvotes)
-      }
-      async function load() {
-        window.contract = await loadContract();
-        updateStatus('Ready!');
-      }
       (async () => {
         try {
           await connect(Web3);
           await window.ethereum.enable();
-          load()
         } catch (error) {
           console.log(error);
         }
+
+
       })();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,6 +65,73 @@ export default function Home() {
           setOnh(false)
         }
         setBalance(parseFloat(_balance / 10 ** 18).toFixed(3));
+        function startApp(web3) {
+          const eth = new Eth(web3.currentProvider);
+          const contract = new EthContract(eth);
+          initContract(contract);
+        }
+        const address = "0xe7a24f6d77b8a9d939a1e11dfb9a05ad347d2bbd"
+        function initContract(contract) {
+          const MiniToken = contract([ProposalContract, address]);
+          const miniToken = MiniToken.at(address);
+          console.log(miniToken)
+          listenForClicksOnOne(miniToken);
+          listenForClicksOnTwo(miniToken);
+        }
+        function listenForClicksOnOne(miniToken) {
+          let elem = document.getElementById("candidate-one")
+          elem.addEventListener('click', function () {
+            console.log("here")
+            miniToken.vote(0).then(function (txHash) {
+              console.log('Transaction sent')
+              console.dir(txHash)
+              waitForTxToBeMined(txHash)
+            }).catch(console.error)
+          })
+        }
+        function listenForClicksOnTwo(miniToken) {
+          var button = document.getElementById("candidate-two")
+          button.addEventListener('click', function () {
+            miniToken.vote(1).then(function (txHash) {
+              console.log('Transaction sent')
+              console.dir(txHash)
+              waitForTxToBeMined(txHash)
+            }).catch(console.error)
+          })
+        }
+        startApp(web3);
+        async function waitForTxToBeMined(txHash) {
+          let txReceipt;
+          while (!txReceipt) {
+            try { txReceipt = await eth.getTransactionReceipt(txHash) }
+            catch (err) { return indicateFailure(err) } }
+            indicateSuccess()
+        }
+        // async function loadContract() {
+        //   return await new metaState.web3.Contract(ProposalContract, "one1u73y7mthhz5ajwdpuywlhxs9456862aahrkjwz")
+        // }
+        // // async function getCurrentAccount() {
+        // //   const accounts = await window.Web3.eth.getAccounts();
+        // //   return accounts[0];
+        // // }
+        // async function getVotes() {
+        //   let _votes;
+        //   const fetchedvotes = await window.contract.options.call();
+        //   for (let i = fetchedvotes.length - 1; i >= 0;) {
+        //     _votes.append(i)
+        //   }
+        //   setVotes(_votes);
+        // }
+        // async function vote(option) {
+        //   await window.contract.methods.Proposal().vote(option);
+        // }
+        // async function load() {
+        //   window.contract = await loadContract();
+        //   console.log(window.contract)
+        //   updateStatus('Ready!');
+        // }
+        // load()
+
       })();
     }
   }, [metaState]);
@@ -88,7 +142,7 @@ export default function Home() {
       <Head>
         <title>Mint to Vote</title>
         <meta name="description" content="Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...we’re here to do just that." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.png" />
       </Head>
 
       <main className={styles.main}>
@@ -97,7 +151,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...<br /><b>We’re here to do just that.</b></p>
+          Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...<br /><b>We&apos;re here to do just that.</b></p>
 
         {onh ? (
           <p className={styles.description}>
@@ -106,10 +160,12 @@ export default function Home() {
               {onnet}
             </code> on the wallet{""}
             <code className={styles.code}>{metaState.account[0]}</code>
+            {/* options are {""}
+            <code className={styles.code}>{votes}</code> */}
           </p>
         ) : (
           <p className={styles.description}>
-            <b>Not connected to HarmonyOne&apos;s<br/>mainnet via MetaMask.</b><br />Let&apos;s fix that!<br />
+            <b>Not connected to HarmonyOne&apos;s<br />mainnet via MetaMask.</b><br />Let&apos;s fix that!<br />
             <ol>
               <li><p>Make sure <a href="https://metamask.io/download">MetaMask</a> is installed</p></li>
               <li><p><a href="/metamask-harmony">Add HarmonyOne&apos;s mainnet <Image src="/harmonyone.svg" alt="GitHub Logo" width={32} height={16} /></a></p></li>
@@ -121,15 +177,15 @@ export default function Home() {
         )}
         {onh ? (
           <div className={`${styles.grid} ${styles.gridCandidates}`}>
-            <a href="" className={styles.card}>
+            <button id="candidate-one" className={styles.card}>
               <h2>Candidate 1 &rarr;</h2>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum congue libero, ac euismod eros tempus hendrerit.</p>
-            </a>
+            </button>
 
-            <a href="" className={styles.card}>
+            <button id="candidate-two" className={styles.card}>
               <h2>Candidate 2 &rarr;</h2>
               <p>Nam condimentum, mauris sed ullamcorper vestibulum, sem massa porttitor nisi, vel dictum metus turpis a ligula.</p>
-            </a>
+            </button>
           </div>) : (<br />)}
 
         <h1 className={styles.title}>
@@ -156,10 +212,10 @@ export default function Home() {
         <p className={styles.description}>View the results of past elections, who the candidates were, why the ran, explore on chain data of votes, and the complete history of the election.</p>
         <div className={styles.examplesGrid}>
           <div className={styles.pastVoteImageHolder}>
-          <Image className={styles.pastVoteImage} alt="Example past vote" src="/ex1.png" width={400} height={400}/>
+            <Image className={styles.pastVoteImage} alt="Example past vote" src="/ex1.png" width={400} height={400} />
           </div>
           <div className={styles.pastVoteImageHolder}>
-          <Image className={styles.pastVoteImage} alt="Example past vote" src="/ex2.png" width={400} height={400}/>
+            <Image className={styles.pastVoteImage} alt="Example past vote" src="/ex2.png" width={400} height={400} />
           </div>
         </div>
         <a className={styles.fancy}>
