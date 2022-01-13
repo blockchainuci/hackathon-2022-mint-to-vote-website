@@ -149,9 +149,10 @@ export default function Home() {
         <h1 className={styles.title}>
           Mint To Vote
         </h1>
-
         <p className={styles.description}>
           Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...<br /><b>We&apos;re here to do just that.</b></p>
+        <br/>
+        <Image src="/logo.png" alt="logo" width="200" height="200"/>
 
         {onh ? (
           <p className={styles.description}>

@@ -101,6 +101,7 @@
 .card:active {
   color: #4452FE;
   border-color: #4452FE;
+  cursor: pointer;
 }
 
 .card h2,
