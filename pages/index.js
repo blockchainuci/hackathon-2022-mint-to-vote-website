@@ -72,17 +72,20 @@ export default function Home() {
         }
         const address = "0xe7a24f6d77b8a9d939a1e11dfb9a05ad347d2bbd"
         function initContract(contract) {
-          const MiniToken = contract([ProposalContract, address]);
+          const MiniToken = contract(ProposalContract["abi"]);
           const miniToken = MiniToken.at(address);
           console.log(miniToken)
+          try {
           listenForClicksOnOne(miniToken);
           listenForClicksOnTwo(miniToken);
+          }
+          catch { console.log("") }
         }
         function listenForClicksOnOne(miniToken) {
-          let elem = document.getElementById("candidate-one")
-          elem.addEventListener('click', function () {
+          var button = document.getElementById("candidate-one")
+          button.addEventListener('click', function () {
             console.log("here")
-            miniToken.vote(0).then(function (txHash) {
+            miniToken.vote(0, { from: metaState.account[0] }).then(function (txHash) {
               console.log('Transaction sent')
               console.dir(txHash)
               waitForTxToBeMined(txHash)
@@ -92,7 +95,7 @@ export default function Home() {
         function listenForClicksOnTwo(miniToken) {
           var button = document.getElementById("candidate-two")
           button.addEventListener('click', function () {
-            miniToken.vote(1).then(function (txHash) {
+            miniToken.vote(1, { from: metaState.account[0] }).then(function (txHash) {
               console.log('Transaction sent')
               console.dir(txHash)
               waitForTxToBeMined(txHash)
@@ -103,35 +106,10 @@ export default function Home() {
         async function waitForTxToBeMined(txHash) {
           let txReceipt;
           while (!txReceipt) {
-            try { txReceipt = await eth.getTransactionReceipt(txHash) }
-            catch (err) { return indicateFailure(err) } }
+            try { txReceipt = await Eth.getTransactionReceipt(txHash) }
+            catch (err) { return console.log(err) } }
             indicateSuccess()
         }
-        // async function loadContract() {
-        //   return await new metaState.web3.Contract(ProposalContract, "one1u73y7mthhz5ajwdpuywlhxs9456862aahrkjwz")
-        // }
-        // // async function getCurrentAccount() {
-        // //   const accounts = await window.Web3.eth.getAccounts();
-        // //   return accounts[0];
-        // // }
-        // async function getVotes() {
-        //   let _votes;
-        //   const fetchedvotes = await window.contract.options.call();
-        //   for (let i = fetchedvotes.length - 1; i >= 0;) {
-        //     _votes.append(i)
-        //   }
-        //   setVotes(_votes);
-        // }
-        // async function vote(option) {
-        //   await window.contract.methods.Proposal().vote(option);
-        // }
-        // async function load() {
-        //   window.contract = await loadContract();
-        //   console.log(window.contract)
-        //   updateStatus('Ready!');
-        // }
-        // load()
-
       })();
     }
   }, [metaState]);
@@ -244,7 +222,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <Image src="/harmony.svg" alt="Harmony Logo" width={72} height={16} /></a>
-        </span>. Made by Kainoa Kanter, Anish Lathker, Ethan Nguyen, and Daniel Lee.
+        </span>. Made by Kainoa Kanter, Ethan Nguyen, Anish Lathker, and Daniel Lee.
       </footer>
     </div>
   );

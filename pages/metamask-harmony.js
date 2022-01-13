@@ -9,7 +9,7 @@ export default function Instructions() {
             <Head>
                 <title>How to connect MetaMask to HarmonyOne&apos; mainnet</title>
                 <meta name="description" content="Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...we’re here to do just that." />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/logo.png" />
             </Head>
 
             <main className={styles.main}>
