@@ -68,7 +68,7 @@ export default function Home() {
           const contract = new EthContract(eth);
           initContract(contract);
         }
-        const address = "0x3ed819Ee2Aa4220A29e77dE30c0FbEADdc0634f7"
+        const address = "0xe7a24f6d77b8a9d939a1e11dfb9a05ad347d2bbd"
         function initContract(contract) {
           const MiniToken = contract(ProposalContract["abi"]);
           const miniToken = MiniToken.at(address);
@@ -104,7 +104,7 @@ export default function Home() {
           let txReceipt;
           while (!txReceipt) {
             try { txReceipt = await Eth.getTransactionReceipt(txHash) }
-            catch (err) { return indicateFailure(err) }
+            catch (err) { return console.log(err) }
           }
           indicateSuccess()
         }
