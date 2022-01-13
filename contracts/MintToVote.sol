@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL
 pragma solidity ^0.5.16;
 
 import "./Proposal.sol";
