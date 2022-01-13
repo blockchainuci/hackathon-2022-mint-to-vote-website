@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { useMetamask } from "use-metamask";
-import { FaDna, FaRobot, FaInfinity } from "react-icons/fa";
+import { FaDna, FaRobot, FaInfinity, FaOdnoklassnikiSquare } from "react-icons/fa";
 import Web3 from "web3";
 import styles from "../styles/Home.module.css";
 
@@ -10,6 +10,7 @@ export default function Home() {
   const { connect, metaState } = useMetamask();
   const [balance, setBalance] = useState();
   const [onh, setOnh] = useState(false);
+  const [onnet, setOnnet] = useState("Harmony Testnet");
   useEffect(() => {
     if (!metaState.isConnected) {
       (async () => {
@@ -30,16 +31,22 @@ export default function Home() {
       (async () => {
         let _balance;
         let _onh;
+        let _onnet;
         if (web3?.eth) {
           _balance = await metaState.web3.eth.getBalance(metaState.account[0]);
         } else {
           _balance = await metaState.web3.getBalance(metaState.account[0]);
         }
         const harmonyShards = [1666600000, 1666600001, 1666600002, 1666600003, 1666700000, 1666700001, 1666700002, 1666700003]
+        const mainnetShards = [1666600000, 1666600001, 1666600002, 1666600003]
         if (harmonyShards.indexOf(parseInt(metaState.chain.id)) != -1) {
           _onh = true;
           setOnh(true);
           console.log(_onh);
+          if (mainnetShards.indexOf(parseInt(metaState.chain.id)) != -1) {
+            _onnet = "Harmony Mainnet";
+            setOnnet("Harmony Mainnet");
+          }
         }
         else {
           _onh = false;
@@ -70,8 +77,8 @@ export default function Home() {
           <p className={styles.description}>
             Đapp connected to the {" "}
             <code className={styles.code}>
-              {metaState.chain.id}
-            </code> chain on the wallet{""}
+              {onnet}
+            </code> on the wallet{""}
             <code className={styles.code}>{metaState.account[0]}</code>
           </p>
         ) : (
