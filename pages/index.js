@@ -87,7 +87,7 @@ export default function Home() {
           </p>
         ) : (
           <p className={styles.description}>
-            <b>Not connected to HarmonyOne's<br/>mainnet via MetaMask.</b><br />Let&apos;s fix that!<br />
+            <b>Not connected to HarmonyOne&apos;s<br/>mainnet via MetaMask.</b><br />Let&apos;s fix that!<br />
             <ol>
               <li><p>Make sure <a href="https://metamask.io/download">MetaMask</a> is installed</p></li>
               <li><p><a href="/metamask-harmony">Add HarmonyOne&apos;s mainnet <Image src="/harmonyone.svg" alt="GitHub Logo" width={32} height={16} /></a></p></li>
