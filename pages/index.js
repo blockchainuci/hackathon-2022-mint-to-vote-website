@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { useMetamask } from "use-metamask";
-import { FaDna, FaRobot, FaInfinity, FaOdnoklassnikiSquare } from "react-icons/fa";
+import { FaDna, FaRobot, FaInfinity } from "react-icons/fa";
 import Web3 from "web3";
 import styles from "../styles/Home.module.css";
+import MintToVoteContract from '../contracts/MintToVote';
 
 export default function Home() {
   const { connect, metaState } = useMetamask();
@@ -13,10 +14,26 @@ export default function Home() {
   const [onnet, setOnnet] = useState("Harmony Testnet");
   useEffect(() => {
     if (!metaState.isConnected) {
+      async function loadContract() {
+        return await new window.web3.eth.Contract([MintToVoteContract, "one1s7qmn0safezuajxyxqnvxqjxp9yz2wekhdnt8n"])
+      }
+      async function getCurrentAccount() {
+        const accounts = await window.web3.eth.getAccounts();
+        return accounts[0];r
+      }
+      async function createNewProposal() {
+        //AAA
+      }
+      async function load() {
+        await loadWeb3();
+        window.contract = await loadContract();
+        updateStatus('Ready!');
+      }
       (async () => {
         try {
           await connect(Web3);
           await window.ethereum.enable();
+          load()
         } catch (error) {
           console.log(error);
         }
@@ -60,6 +77,7 @@ export default function Home() {
       })();
     }
   }, [metaState]);
+
 
   return (
     <div className={styles.container}>
@@ -120,7 +138,7 @@ export default function Home() {
           </div>
           <div className={styles.advantages}>
             <h2><FaRobot size={20} color={'#02E4C0'} /> KYC Proteted</h2>
-            <p>Utilizing Harmony’s Blockchain, voting can be done in a truly trustless enviroment ensuring the extinction of fradulent votes or miscounts.</p>
+            <p>Utilizing Harmony&apos;s Blockchain, voting can be done in a truly trustless enviroment ensuring the extinction of fradulent votes or miscounts.</p>
           </div>
           <div className={styles.advantages}>
             <h2><FaInfinity size={20} color={'#02E4C0'} /> Possibilities</h2>
