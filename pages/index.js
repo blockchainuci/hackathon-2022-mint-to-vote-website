@@ -76,8 +76,8 @@ export default function Home() {
           const miniToken = MiniToken.at(address);
           console.log(miniToken)
           try {
-          listenForClicksOnOne(miniToken);
-          listenForClicksOnTwo(miniToken);
+            listenForClicksOnOne(miniToken);
+            listenForClicksOnTwo(miniToken);
           }
           catch { console.log("") }
         }
@@ -107,8 +107,9 @@ export default function Home() {
           let txReceipt;
           while (!txReceipt) {
             try { txReceipt = await Eth.getTransactionReceipt(txHash) }
-            catch (err) { return console.log(err) } }
-            indicateSuccess()
+            catch (err) { return console.log(err) }
+          }
+          indicateSuccess()
         }
       })();
     }
@@ -129,8 +130,8 @@ export default function Home() {
         </h1>
         <p className={styles.description}>
           Voting should be easy, transparent, trustless and effecient. With a unique Blockchain based Mint to Vote system...<br /><b>We&apos;re here to do just that.</b></p>
-        <br/>
-        <Image src="/logo.png" alt="logo" width="200" height="200"/>
+        <br />
+        <Image src="/logo.png" alt="logo" width="200" height="200" />
 
         {onh ? (
           <p className={styles.description}>
