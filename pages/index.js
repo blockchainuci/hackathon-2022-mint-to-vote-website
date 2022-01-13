@@ -5,7 +5,7 @@ import { useMetamask } from "use-metamask";
 import { FaDna, FaRobot, FaInfinity } from "react-icons/fa";
 import Web3 from "web3";
 import styles from "../styles/Home.module.css";
-import MintToVoteContract from '../contracts/MintToVote';
+import ProposalContract from "../contracts/Proposal";
 
 export default function Home() {
   const { connect, metaState } = useMetamask();
@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     if (!metaState.isConnected) {
       async function loadContract() {
-        return await new window.web3.eth.Contract([MintToVoteContract, "one1s7qmn0safezuajxyxqnvxqjxp9yz2wekhdnt8n"])
+        return await new window.web3.eth.Contract([ProposalContract, "one1s7qmn0safezuajxyxqnvxqjxp9yz2wekhdnt8n"])
       }
       async function getCurrentAccount() {
         const accounts = await window.web3.eth.getAccounts();
