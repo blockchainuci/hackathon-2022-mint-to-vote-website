@@ -42,7 +42,7 @@ contract Proposal{
     hasVoted[sender] = true;
     options[option].voteCount += 1;
   }
-  
+
   //computes winning option from proposal by looking at all votes
   function winningOption() public view
             returns (uint winningOption_)
@@ -64,8 +64,5 @@ contract Proposal{
     {
         winnerName_ = options[winningOption()].optionName;
     }
-
-
-
 }
 
