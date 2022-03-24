@@ -2,6 +2,8 @@
 
 # ⚠ THE DEMO WEBSITE IS DOWN DUE TO VERCEL TRIAL RUNNING OUT ⚠
 
+### [YOUTUBE VIDEO DEMO](https://www.youtube.com/watch?v=XOUcV-eDNto)
+
 Utilizing NFTs and Harmony's chain we have created a voting system that is entirely transparent, affordable, trustless, scalable, and verifiable with a "Mint To Vote" system.
 
 In our sample video, there are two candidates running against each other. A user can connect their wallet to cast a vote towards whichever nominee they would like to vote for. An NFT designated to the nominee is then minted representing a singular vote for the candidate. Using on chain explorers, the general public can view how many votes each candidate received to verify that elections were not miscounted or fraudulent.
